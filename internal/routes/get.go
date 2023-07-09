@@ -15,15 +15,16 @@ func GetLong(ctx *gin.Context) {
 
 	longUrl, err := database.DB.Get(url)
 	if err != nil {
-		if errors.Is(err, dberrors.ErrKeyHasAlreadyExists) {
+		if errors.Is(err, dberrors.ErrShortUrlNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{
 				"message": "unknown url",
 			})
 		} else {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"message": err,
+				"message": err.Error(),
 			})
 		}
+		return
 	}
 
 	log.Info().Str("short_url", url).Str("long_url", longUrl).Msg("resolved short url")

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
-	"strconv"
 
 	"github.com/deka-microservices/go-url-shortener/internal/database"
+	"github.com/deka-microservices/go-url-shortener/pkg/base62"
 	"github.com/deka-microservices/go-url-shortener/pkg/models"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -22,8 +22,8 @@ func Shorten(ctx *gin.Context) {
 
 	// TODO! validate link
 
-	n := rand.Uint64()
-	s := strconv.FormatUint(n, 16)
+	n := rand.Uint32()
+	s := base62.Encode(n)
 
 	exists, _ := database.DB.Exists(s)
 	fail_count := 16
@@ -36,8 +36,8 @@ func Shorten(ctx *gin.Context) {
 			return
 		}
 
-		n = rand.Uint64()
-		s = strconv.FormatUint(n, 16)
+		n = rand.Uint32()
+		s = base62.Encode(n)
 		exists, _ = database.DB.Exists(s)
 	}
 
