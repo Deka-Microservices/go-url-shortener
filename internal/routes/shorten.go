@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"regexp"
 
 	"github.com/deka-microservices/go-url-shortener/internal/database"
 	"github.com/deka-microservices/go-url-shortener/pkg/base62"
@@ -16,11 +17,25 @@ func Shorten(ctx *gin.Context) {
 	var req models.ShortenRequest
 	if err := ctx.ShouldBind(&req); err != nil {
 		ctx.JSON(http.StatusBadGateway, gin.H{
-			"message": err,
+			"message": err.Error(),
 		})
 	}
 
-	// TODO! validate link
+	url_regexp := "^https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$"
+	matched, err := regexp.Match(url_regexp, []byte(req.Url))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	if !matched {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": "url format is invalid",
+		})
+		return
+	}
 
 	n := rand.Uint32()
 	s := base62.Encode(n)
