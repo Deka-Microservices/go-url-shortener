@@ -15,6 +15,7 @@ func Health(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"message": "fake bad helath",
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{})
