@@ -21,6 +21,7 @@ func main() {
 	database.InitGlobalDatabase()
 
 	// Init routes
+	e.GET("/health", routes.Health)
 	e.GET("/:url", routes.GetLong)
 	e.POST("/shorten", routes.Shorten)
 

@@ -17,4 +17,5 @@ func init() {
 	viper.AutomaticEnv()
 
 	viper.SetDefault(consts.CONFIG_PORT, 9000)
+	viper.SetDefault(consts.CONFIG_FAIL_PERCENT, uint32(25))
 }
