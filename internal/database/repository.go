@@ -1,10 +1,12 @@
 package database
 
+import "context"
+
 type ShortenRepository interface {
 	// Add short url binding to long one
-	AddUrl(shortUrl string, longUrl string) error
+	AddUrl(ctx context.Context, string, longUrl string) error
 	// Check if short url exists
-	Exists(shortUrl string) (bool, error)
+	Exists(ctx context.Context, shortUrl string) (bool, error)
 	// Get returns long version of url
-	Get(shortUrl string) (string, error)
+	Get(ctx context.Context, shortUrl string) (string, error)
 }
