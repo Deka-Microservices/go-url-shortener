@@ -18,4 +18,5 @@ func init() {
 
 	viper.SetDefault(consts.CONFIG_PORT, 9000)
 	viper.SetDefault(consts.CONFIG_FAIL_PERCENT, uint32(25))
+	viper.SetDefault(consts.CONFIG_REDIS_ADDRESS, "")
 }
