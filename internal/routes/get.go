@@ -13,7 +13,7 @@ import (
 func GetLong(ctx *gin.Context) {
 	url := ctx.Param("url")
 
-	longUrl, err := database.DB.Get(url)
+	longUrl, err := database.DB.Get(ctx.Request.Context(), url)
 	if err != nil {
 		if errors.Is(err, dberrors.ErrShortUrlNotFound) {
 			ctx.JSON(http.StatusNotFound, gin.H{

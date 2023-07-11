@@ -40,7 +40,7 @@ func Shorten(ctx *gin.Context) {
 	n := rand.Uint32()
 	s := base62.Encode(n)
 
-	exists, _ := database.DB.Exists(s)
+	exists, _ := database.DB.Exists(ctx.Request.Context(), s)
 	fail_count := 16
 	for exists {
 		fail_count--
@@ -53,11 +53,11 @@ func Shorten(ctx *gin.Context) {
 
 		n = rand.Uint32()
 		s = base62.Encode(n)
-		exists, _ = database.DB.Exists(s)
+		exists, _ = database.DB.Exists(ctx.Request.Context(), s)
 	}
 
 	log.Info().Str("short_url", s).Str("long_url", req.Url).Msg("short_url_generated")
-	database.DB.AddUrl(s, req.Url)
+	database.DB.AddUrl(ctx.Request.Context(), s, req.Url)
 
 	ctx.JSON(http.StatusCreated, gin.H{
 		"short_url": fmt.Sprintf("/%s", s),
