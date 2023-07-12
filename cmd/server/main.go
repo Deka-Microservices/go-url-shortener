@@ -22,6 +22,7 @@ func main() {
 
 	// Init routes
 	e.GET("/health", routes.Health)
+	e.GET("/version", routes.Version)
 	e.GET("/:url", routes.GetLong)
 	e.POST("/shorten", routes.Shorten)
 
