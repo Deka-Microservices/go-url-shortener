@@ -4,7 +4,7 @@ import "fmt"
 
 const (
 	VERSION_MAJOR = 0
-	VERSION_MINOR = 2
+	VERSION_MINOR = 3
 	VERSION_PATCH = 1
 )
 
