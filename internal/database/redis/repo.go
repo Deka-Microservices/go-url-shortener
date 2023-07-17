@@ -12,20 +12,21 @@ import (
 )
 
 type RedisRepository struct {
-	db *redis.Client
+	db *redis.ClusterClient
 }
 
 func NewRedisRepository() (*RedisRepository, error) {
-	address := viper.GetString(consts.CONFIG_REDIS_ADDRESS)
+	addresses := viper.GetStringSlice(consts.CONFIG_REDIS_ADDRESSES)
 
-	if len(address) == 0 {
+	if len(addresses) == 0 {
 		return nil, ErrRedisAddressIsEmpty
 	}
 
-	options := redis.Options{
-		Addr: address,
+	options := redis.ClusterOptions{
+		Addrs: addresses,
 	}
-	db := redis.NewClient(&options)
+
+	db := redis.NewClusterClient(&options)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
