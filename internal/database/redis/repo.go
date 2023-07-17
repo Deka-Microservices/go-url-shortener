@@ -23,7 +23,8 @@ func NewRedisRepository() (*RedisRepository, error) {
 	}
 
 	options := redis.ClusterOptions{
-		Addrs: addresses,
+		Addrs:    addresses,
+		Password: viper.GetString(consts.CONFIG_REDIS_PASSWORD),
 	}
 
 	db := redis.NewClusterClient(&options)
