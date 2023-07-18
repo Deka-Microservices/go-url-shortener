@@ -30,10 +30,10 @@ func main() {
 
 	log.Info().Str("version", consts.Version()).Msg("version report")
 
-	if viper.GetBool(consts.CONFIG_USE_TLS) {
-		certFile := viper.GetString(consts.CONFIG_TLS_CERT)
-		keyFile := viper.GetString(consts.CONFIG_TLS_KEY)
+	certFile := viper.GetString(consts.CONFIG_TLS_CERT)
+	keyFile := viper.GetString(consts.CONFIG_TLS_KEY)
 
+	if len(certFile) != 0 && len(keyFile) != 0 {
 		log.Info().Str("key_file", keyFile).Str("cert_file", certFile).Msg("running with TLS")
 
 		err := e.RunTLS(address, certFile, keyFile)

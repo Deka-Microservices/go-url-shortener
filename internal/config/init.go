@@ -22,7 +22,6 @@ func init() {
 	viper.SetDefault(consts.CONFIG_REDIS_ADDRESSES, "")
 	viper.SetDefault(consts.CONFIG_REDIS_PASSWORD, "")
 
-	viper.SetDefault(consts.CONFIG_USE_TLS, false)
 	viper.SetDefault(consts.CONFIG_TLS_CERT, "")
 	viper.SetDefault(consts.CONFIG_TLS_KEY, "")
 }
