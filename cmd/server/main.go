@@ -30,5 +30,21 @@ func main() {
 
 	log.Info().Str("version", consts.Version()).Msg("version report")
 
-	e.Run(address)
+	if viper.GetBool(consts.CONFIG_USE_TLS) {
+		certFile := viper.GetString(consts.CONFIG_TLS_CERT)
+		keyFile := viper.GetString(consts.CONFIG_TLS_KEY)
+
+		log.Info().Str("key_file", keyFile).Str("cert_file", certFile).Msg("running with TLS")
+
+		err := e.RunTLS(address, certFile, keyFile)
+		if err != nil {
+			log.Fatal().Err(err).Msg("failed to serve")
+		}
+	} else {
+		err := e.Run(address)
+		if err != nil {
+			log.Fatal().Err(err).Msg("failed to serve")
+		}
+	}
+
 }

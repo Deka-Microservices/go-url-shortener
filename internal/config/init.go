@@ -18,6 +18,11 @@ func init() {
 
 	viper.SetDefault(consts.CONFIG_PORT, 9000)
 	viper.SetDefault(consts.CONFIG_FAIL_PERCENT, uint32(25))
+
 	viper.SetDefault(consts.CONFIG_REDIS_ADDRESSES, "")
 	viper.SetDefault(consts.CONFIG_REDIS_PASSWORD, "")
+
+	viper.SetDefault(consts.CONFIG_USE_TLS, false)
+	viper.SetDefault(consts.CONFIG_TLS_CERT, "")
+	viper.SetDefault(consts.CONFIG_TLS_KEY, "")
 }
